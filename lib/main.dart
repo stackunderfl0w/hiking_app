@@ -1,89 +1,205 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart'; // Suitable for most situations
-import 'package:flutter_map/plugin_api.dart'; // Only import if required functionality is not exposed by default
-import 'package:latlong2/latlong.dart';
 import 'map.dart';
-void main() {
-  runApp(MaterialApp(
-    initialRoute: '/',
-    routes: {
-      '/': (context) => const HomeRoute(),
-      '/second': (context) => const SecondRoute(),
-      '/third': (context) => const ThirdRoute(),
-    },
-  ));
+void main(List<String> args) { //just starts the screen
+  runApp(myApp());
 }
 
-class HomeRoute extends StatelessWidget {
-  const HomeRoute({Key? key}) : super(key: key);
+//this is where everything is tied together
+class myApp extends StatelessWidget { //as of now this is complete I think
+  const myApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Trailist'),
-        backgroundColor: Colors.blue,
-      ), // AppBar
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              child: const Text('Register placeholder'),
-              onPressed: () {
-                Navigator.pushNamed(context, '/second');
-              },
-            ), // ElevatedButton
-            ElevatedButton(
-              child: const Text('Login placeholder'),
-              onPressed: () {
-                Navigator.pushNamed(context, '/third');
-              },
-            ), // ElevatedButton
-          ], // <Widget>[]
-        ), // Column
-      ), // Center
-    ); // Scaffold
-  }
-}
-
-class SecondRoute extends StatelessWidget {
-  const SecondRoute({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Registration"),
-        backgroundColor: Colors.blue,
-      ), // AppBar
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Back!'),
-        ), // ElevatedButton
-      ), // Center
-    ); // Scaffold
-  }
-}
-
-class ThirdRoute extends StatelessWidget {
-  const ThirdRoute({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Logged in"),
-        backgroundColor: Colors.blue,
-      ), // AppBar
-      body: Center(
-        child: lined_map(cords:[LatLng(35, 40), LatLng(20, 50), LatLng(25, 45)])//map(), // ElevatedButton
+    return MaterialApp(
+      title: "Hiking App",
+      theme: ThemeData(
+          primaryColor: Color.fromARGB(255, 4, 75, 22),
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          hoverColor: Colors.transparent
       ),
-    ); // Scaffold
+      debugShowCheckedModeBanner: false, //idk why this is here but the geeksforgeeks page had it
+      home: const HomePage(),
+    );
   }
 }
 
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  int pageIndex = 0;
+
+  final pages = [
+    const Map(),
+    const Planner(),
+    const Account(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold( //this stuff could be broken into a seperate class but it's confusing
+      body: pages[pageIndex],
+      bottomNavigationBar: Container(
+        height: 60,
+        decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(0),
+            topRight: Radius.circular(0),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              enableFeedback: false,
+              onPressed: () {
+                setState(() {
+                  pageIndex = 0;
+                });
+              },
+              icon: pageIndex == 0
+                  ? const Icon(
+                Icons.landscape,
+                color: Colors.brown,
+                size: 35,
+              )
+                  : const Icon(
+                Icons.landscape_outlined,
+                color: Colors.white,
+                size: 35,
+              ),
+            ),
+            IconButton(
+              enableFeedback: false,
+              onPressed: () {
+                setState(() {
+                  pageIndex = 1;
+                });
+              },
+              icon: pageIndex == 1
+                  ? const Icon(
+                Icons.map,
+                color: Colors.brown,
+                size: 35,
+              )
+                  : const Icon(
+                Icons.map_outlined,
+                color: Colors.white,
+                size: 35,
+              ),
+            ),
+            IconButton(
+              enableFeedback: false,
+              onPressed: () {
+                setState(() {
+                  pageIndex = 2;
+                });
+              },
+              icon: pageIndex == 2
+                  ? const Icon(
+                Icons.account_circle,
+                color: Colors.brown,
+                size: 35,
+              )
+                  : const Icon(
+                Icons.account_circle_outlined,
+                color: Colors.white,
+                size: 35,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Map extends StatefulWidget {
+  const Map({Key? key}) : super(key: key);
+
+  @override
+  _MapState createState() => _MapState();
+}
+
+class _MapState extends State<Map> {
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        color: Color.fromARGB(103, 0, 250, 67), //this controls the backround color
+
+        child: Center( //it was blue lining if I didn't have this. Idk why but ok
+          child: map()
+        )
+    );
+  }
+}
+
+class Planner extends StatefulWidget {
+  const Planner({Key? key}) : super(key: key);
+
+  @override
+  _PlannerState createState() => _PlannerState();
+}
+
+class _PlannerState extends State<Planner> {
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        color: Color.fromARGB(103, 0, 250, 67), //this controls the backround color
+
+        child: const Center( //it was blue lining if I didn't have this. Idk why but ok
+          child: Text(
+              "Planner",
+              style: TextStyle(
+                color: Colors.green,
+                fontSize: 45,
+                fontWeight: FontWeight.w500,
+              )
+          ),
+        )
+    );
+  }
+}
+
+
+class Account extends StatefulWidget {
+  const Account({Key? key}) : super(key: key);
+
+  @override
+  _AccountState createState() => _AccountState();
+}
+
+class _AccountState extends State<Account> {
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        color: Color.fromARGB(103, 0, 250, 67), //this controls the backround color
+
+        child: const Center( //it was blue lining if I didn't have this. Idk why but ok
+          child: Text(
+              "Personal screen",
+              style: TextStyle(
+                color: Colors.green,
+                fontSize: 45,
+                fontWeight: FontWeight.w500,
+              )
+          ),
+        )
+    );
+  }
+}
 
