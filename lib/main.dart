@@ -138,7 +138,9 @@ class _MapState extends State<Map> {
         color: Color.fromARGB(103, 0, 250, 67), //this controls the backround color
 
         child: Center( //it was blue lining if I didn't have this. Idk why but ok
-          child: map()
+          //child: map()
+          child: FullMap(lineEditor: true),
+          //child: FullMap(lineLayer: true),
         )
     );
   }
