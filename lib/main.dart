@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'map.dart';
+import 'location.dart';
 void main(List<String> args) { //just starts the screen
   runApp(myApp());
 }
@@ -134,6 +135,7 @@ class _MapState extends State<Map> {
 
   @override
   Widget build(BuildContext context) {
+    init_location();
     return Container(
         color: Color.fromARGB(103, 0, 250, 67), //this controls the backround color
 

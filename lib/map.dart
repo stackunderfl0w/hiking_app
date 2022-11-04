@@ -5,6 +5,8 @@ import 'package:flutter_map/plugin_api.dart'; // Only import if required functio
 import 'package:latlong2/latlong.dart';
 import 'package:flutter_map_line_editor/dragmarker.dart';
 import 'package:flutter_map_line_editor/polyeditor.dart';
+import 'location.dart';
+
 
 final mapController = MapController();
 final List<LatLng> cords=[];
@@ -72,6 +74,7 @@ class FullMap extends StatefulWidget {
 
 class _FullMapState extends State<FullMap> {
   late PolyEditor polyEditor;
+  final mapController = MapController();
 
   List<Polyline> polyLines = [];
   @override
@@ -94,6 +97,7 @@ class _FullMapState extends State<FullMap> {
     bool lineEditor=widget.lineEditor;
     return Scaffold(
       body: FlutterMap(
+        mapController: mapController,
         options: MapOptions(
           absorbPanEventsOnScrollables: false,
           center: LatLng(51.5, -0.09),
@@ -130,6 +134,13 @@ class _FullMapState extends State<FullMap> {
             ),
           ]
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.replay),
+        onPressed: () {
+          //mapController.move(LatLng(current_location.latitude!,current_location.longitude!), 11);
+          mapController.moveAndRotate(LatLng(current_location.latitude!,current_location.longitude!), 11,0);
+        },
       ),
     );
   }
