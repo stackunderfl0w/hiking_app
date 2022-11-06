@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'map.dart';
 import 'location.dart';
+import 'profile_page.dart';
+
 void main(List<String> args) { //just starts the screen
   runApp(myApp());
 }
@@ -39,7 +41,7 @@ class _HomePageState extends State<HomePage> {
   final pages = [
     const Map(),
     const Planner(),
-    const Account(),
+    const ProfilePageWidget(),
   ];
 
   @override
