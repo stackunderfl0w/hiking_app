@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter/material.dart';
 
 //**Main Profile Page Widget
@@ -176,6 +176,7 @@ class _PPHikeWidgetState extends State<PPHikeWidget> {
   //Variables for the hike
   String _title = 'Hike Title';
   double _distance = 0.0;
+  double _difficulty = 1.0;
 
   @override
   Widget build(BuildContext context) {
