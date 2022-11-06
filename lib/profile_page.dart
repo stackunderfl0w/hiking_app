@@ -85,7 +85,9 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                     child: Container(
                       margin: const EdgeInsets.fromLTRB(0, 35, 0, 0),
                       child: ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          print('Logging Out $_userName');
+                        },
                         icon: const Icon(
                           Icons.exit_to_app_rounded,
                           size: 24.0,
@@ -121,7 +123,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                 decoration: const BoxDecoration(
                   border: Border(
                     top: BorderSide(
-                      color: Color(0xFF1B5E20),
+                      color: Color.fromARGB(255,55, 89, 65),
                       width: 2.0,
                     )
                   ),
@@ -175,8 +177,11 @@ class PPHikeWidget extends StatefulWidget {
 class _PPHikeWidgetState extends State<PPHikeWidget> {
   //Variables for the hike
   String _title = 'Hike Title';
-  double _distance = 0.0;
-  double _difficulty = 1.0;
+  double _distance = 2.7;
+  double _difficulty = 3.5;
+  bool _owned = true;
+  bool _comments = true;
+  bool _private = true;
 
   @override
   Widget build(BuildContext context) {
@@ -194,23 +199,143 @@ class _PPHikeWidgetState extends State<PPHikeWidget> {
           width: double.infinity,
           //height: double.infinity,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(1.75)),
+
+            borderRadius: const BorderRadius.all(Radius.circular(3.0)),
             border: Border.all(
-              color: const Color(0xFF1B5E20),
+              color: const Color.fromARGB(255,55, 89, 65),
               width: 6.0,
             ),
           ),
 
-          child: Text(
-            _title,
-            textAlign: TextAlign.center,
-            maxLines: 2,
-            style: const TextStyle(
-              //fontWeight: FontWeight.bold,
-              fontSize: 30,
-              color: Color(0xFF1B5E20),
+          child: Expanded(
+            child: Row(
+
+              children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(0, 0, 20, 15),
+                    child: IconButton(
+                        //Brings you to the planner focusing on the hike that was selected.
+                        onPressed: () {
+                          print('Taking to panner page with hike title: $_title');
+                        },
+                        icon: const Icon(
+                          Icons.location_on_sharp,
+                          size: 55,
+                          color: Color.fromARGB(255,55, 89, 65),
+                        ),
+                    ),
+                  ),
+
+                  Expanded(
+                    child: Stack(
+                      children:[
+
+                        Align(
+                          alignment: const Alignment(-1.0, -0.3),
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(
+                              minWidth: 100,
+                              minHeight: 60,
+                              maxWidth: 190,
+                              maxHeight: 60,
+                            ),
+                            child: Text(
+                              _title,
+                              textAlign: TextAlign.left,
+                              maxLines: 2,
+                              style: const TextStyle(
+                                //fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                color: Color.fromARGB(255,55, 89, 65),
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        Align(
+                          alignment: const Alignment(-1.0, 0.6),
+                          child: RatingBar(
+                              itemSize: 25,
+                              itemPadding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              minRating: 1,
+                              maxRating: 5,
+                              initialRating: _difficulty,
+                              allowHalfRating: true,
+                              ratingWidget: RatingWidget(
+                                full: const Icon(
+                                  Icons.star_outlined,
+                                  size: 5,
+                                  color: Color.fromARGB(255, 249, 246, 154),
+                                ),
+                                half: const Icon(
+                                  Icons.star_half_outlined,
+                                  size: 5,
+                                  color: Color.fromARGB(255, 249, 246, 154),
+                                ),
+                                empty: const Icon(
+                                  Icons.star_outline,
+                                  size: 5,
+                                  color: Color.fromARGB(255, 249, 246, 154),
+                                ),
+                              ),
+                              ignoreGestures: true,
+                              onRatingUpdate: (rating) {
+                                  print(rating);
+                              },
+                          ),
+                        ),
+                        
+                        Align(
+                          alignment: const Alignment(0.2, 0.6),
+                          child: Text(
+                            '$_distance mi',
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                            style: const TextStyle(
+                              //fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: Color.fromARGB(255,55, 89, 65),
+                            ),
+                          ),
+                        ),
+                        
+                        const Align(
+                          alignment: Alignment(0.8, 0.6),
+                          child: Icon(
+                            Icons.library_books,
+                            size: 35,
+                            color: Color.fromARGB(255,55, 89, 65),
+                          ),
+                        ),
+
+                        const Align(
+                          alignment: Alignment(0.65, -0.76),
+                          child: Icon(
+                            Icons.check_box_outlined,
+                            size: 35,
+                            color: Color.fromARGB(255,55, 89, 65),
+                          ),
+                        ),
+
+                        const Align(
+                          alignment: Alignment(0.95, -0.8),
+                          child: Icon(
+                            Icons.lock_outline_rounded,
+                            size: 35,
+                            color: Color.fromARGB(255,55, 89, 65),
+                          ),
+                        ),
+
+                      ],
+
+                    ),
+                  ),
+
+              ],
+
             ),
           ),
+
 
         ),
       ),
