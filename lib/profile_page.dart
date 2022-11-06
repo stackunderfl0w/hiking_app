@@ -117,44 +117,186 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                 margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                 color: const Color.fromARGB(255, 192, 251, 208),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const <Widget>[
-                    //**USER HIKES GO HERE
-                    Text(
-                      'Hike Object Here',
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                        color: Color(0xFF1B5E20),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: const <Widget>[
+                      //**USER HIKES GO HERE
+                      Text(
+                        'Hike Object Here',
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color(0xFF1B5E20),
+                        ),
                       ),
-                    ),
-                    Text(
-                      'Hike Object Here',
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                        color: Color(0xFF1B5E20),
+                      Text(
+                        'Hike Object Here',
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color(0xFF1B5E20),
+                        ),
                       ),
-                    ),
-                    Text(
-                      'Hike Object Here',
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                        color: Color(0xFF1B5E20),
+                      Text(
+                        'Hike Object Here',
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color(0xFF1B5E20),
+                        ),
                       ),
-                    ),
+                      Text(
+                        'Hike Object Here',
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color(0xFF1B5E20),
+                        ),
+                      ),
+                      Text(
+                        'Hike Object Here',
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color(0xFF1B5E20),
+                        ),
+                      ),
+                      Text(
+                        'Hike Object Here',
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color(0xFF1B5E20),
+                        ),
+                      ),
+                      Text(
+                        'Hike Object Here',
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color(0xFF1B5E20),
+                        ),
+                      ),
+                      Text(
+                        'Hike Object Here',
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color(0xFF1B5E20),
+                        ),
+                      ),
+                      Text(
+                        'Hike Object Here',
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color(0xFF1B5E20),
+                        ),
+                      ),
+                      Text(
+                        'Hike Object Here',
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color(0xFF1B5E20),
+                        ),
+                      ),
+                      Text(
+                        'Hike Object Here',
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color(0xFF1B5E20),
+                        ),
+                      ),
+                      Text(
+                        'Hike Object Here',
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color(0xFF1B5E20),
+                        ),
+                      ),
+                      Text(
+                        'Hike Object Here',
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color(0xFF1B5E20),
+                        ),
+                      ),
+                      Text(
+                        'Hike Object Here',
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color(0xFF1B5E20),
+                        ),
+                      ),
+                      Text(
+                        'Hike Object Here',
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color(0xFF1B5E20),
+                        ),
+                      ),
+                      Text(
+                        'Hike Object Here',
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color(0xFF1B5E20),
+                        ),
+                      ),
+                      Text(
+                        'Hike Object Here',
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color(0xFF1B5E20),
+                        ),
+                      ),
 
-                  ],
+                    ],
+                  ),
                 )
               ),
             )
