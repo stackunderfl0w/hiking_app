@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'map.dart';
 import 'location.dart';
-import 'profile_page.dart';
+import 'ProfilePage/profile_page.dart';
 
 void main(List<String> args) { //just starts the screen
   runApp(myApp());
