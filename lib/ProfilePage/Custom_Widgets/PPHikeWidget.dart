@@ -124,33 +124,45 @@ class PPHikeWidget extends StatelessWidget {
                     ),
                   ),
 
-                  const Align(
-                    alignment: Alignment(0.8, 0.6),
-                    child: Icon(
-                      Icons.library_books,
-                      size: 35,
-                      color: Color.fromARGB(255,55, 89, 65),
+                  if(hikedata.comments == true)
+                    const Align(
+                      alignment: Alignment(0.8, 0.6),
+                      child: Icon(
+                        Icons.library_books,
+                        size: 35,
+                        color: Color.fromARGB(255,55, 89, 65),
+                      ),
                     ),
-                  ),
 
-                  const Align(
-                    alignment: Alignment(0.65, -0.76),
-                    child: Icon(
-                      Icons.check_box_outlined,
-                      size: 35,
-                      color: Color.fromARGB(255,55, 89, 65),
+                  if(hikedata.owned == true)
+                    const Align(
+                      alignment: Alignment(0.65, -0.76),
+                      child: Icon(
+                        Icons.check_box_outlined,
+                        size: 35,
+                        color: Color.fromARGB(255, 55, 89, 65),
+                      ),
                     ),
-                  ),
 
-                  const Align(
+                  //**Check if this hike is private or public and change the icon based on it.
+                  if(hikedata.private == true)
+                    const Align(
                     alignment: Alignment(0.95, -0.8),
                     child: Icon(
-                      Icons.lock_outline_rounded,
+                      Icons.lock_outline,
                       size: 35,
                       color: Color.fromARGB(255,55, 89, 65),
                     ),
                   ),
-
+                  if(hikedata.private == false)
+                    const Align(
+                      alignment: Alignment(0.95, -0.8),
+                      child: Icon(
+                        Icons.lock_open_outlined,
+                        size: 35,
+                        color: Color.fromARGB(255,55, 89, 65),
+                      ),
+                    ),
                 ],
 
               ),
