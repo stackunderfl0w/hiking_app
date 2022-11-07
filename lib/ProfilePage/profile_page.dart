@@ -17,9 +17,11 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
   //
   final List<hikeData> _hikesList = [
     hikeData(title: 'Main Chip Ross Loop', distance: 7.7, difficulty: 4.0, owned: true, comments: true, private: true),
-    hikeData(title: 'Bald Hill to Cardwell Hill', distance: 2.5, difficulty: 2.0, owned: true, comments: false, private: true),
-    hikeData(title: 'Fitton Green trail', distance: 1.2, difficulty: 1.0, owned: false, comments: true, private: false),
+    hikeData(title: 'Bald Hill to Cardwell Hill', distance: 2.5, difficulty: 2.5, owned: true, comments: false, private: true),
+    hikeData(title: 'Fitton Green trail', distance: 1.2, difficulty: 1.5, owned: false, comments: true, private: false),
     hikeData(title: 'C2C Trail', distance: 12.8, difficulty: 4.0, owned: false, comments: true, private: false),
+    hikeData(title: 'McDonald Farm', distance: 4.8, difficulty: 3.5, owned: true, comments: true, private: false),
+    hikeData(title: 'Muddy Road', distance: 0.3, difficulty: 1.0, owned: true, comments: false, private: true),
   ];
   //
 

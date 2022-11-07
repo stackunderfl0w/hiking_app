@@ -41,7 +41,7 @@ class PPHikeWidget extends StatelessWidget {
               child: IconButton(
                 //Brings you to the planner focusing on the hike that was selected.
                 onPressed: () {
-                  print('Taking to panner page with hike title: ${hikedata.title}');
+                  print('Taking to planner page with hike title: ${hikedata.title}');
                 },
                 icon: const Icon(
                   Icons.location_on_sharp,
@@ -111,7 +111,7 @@ class PPHikeWidget extends StatelessWidget {
                   ),
 
                   Align(
-                    alignment: const Alignment(0.2, 0.6),
+                    alignment: const Alignment(0.3, 0.6),
                     child: Text(
                       '${hikedata.distance} mi',
                       textAlign: TextAlign.center,
@@ -124,6 +124,7 @@ class PPHikeWidget extends StatelessWidget {
                     ),
                   ),
 
+                  //**Check if this hike has comments associated with it
                   if(hikedata.comments == true)
                     const Align(
                       alignment: Alignment(0.8, 0.6),
@@ -134,6 +135,7 @@ class PPHikeWidget extends StatelessWidget {
                       ),
                     ),
 
+                  //**Check if this hike is owned by the user
                   if(hikedata.owned == true)
                     const Align(
                       alignment: Alignment(0.65, -0.76),
