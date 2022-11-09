@@ -1,0 +1,20 @@
+import 'HikeData.dart';
+
+class UserData {
+  String username = 'UserName';
+  String password = 'apples';
+  late List <HikeData> hikesList;
+
+  //Constructor
+  UserData({required this.username});
+
+  //Methods
+  addHike(HikeData hike) {
+    hikesList.add(hike);
+  }
+
+  removeHike(HikeData hike) {
+    hikesList.remove(hike);
+  }
+
+}

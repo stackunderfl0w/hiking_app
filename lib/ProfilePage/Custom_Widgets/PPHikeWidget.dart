@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import '../../Classes/hikeData.dart';
+import '../../Classes/HikeData.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 //**Profile Page Hike Object Widget
 class PPHikeWidget extends StatelessWidget {
   //Hike data object
-  final hikeData hikedata;
+  final HikeData hikedata;
 
   //**Constructor
-  const PPHikeWidget({ required this.hikedata });
+  const PPHikeWidget({super.key,  required this.hikedata });
 
 
   @override

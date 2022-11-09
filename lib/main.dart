@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'map.dart';
 import 'location.dart';
 import 'ProfilePage/profile_page.dart';
+import 'Classes/UserData.dart';
 
 void main(List<String> args) { //just starts the screen
   runApp(myApp());
@@ -41,7 +42,7 @@ class _HomePageState extends State<HomePage> {
   final pages = [
     const Map(),
     const Planner(),
-    const ProfilePageWidget(),
+    ProfilePageWidget(user: UserData(username: 'Bill Guy')),
   ];
 
   @override

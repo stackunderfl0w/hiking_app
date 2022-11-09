@@ -1,29 +1,25 @@
 import 'package:flutter/material.dart';
-import '../Classes/hikeData.dart';
 import 'Custom_Widgets/PPHikeWidget.dart';
+import '../Classes/UserData.dart';
 
 //**Main Profile Page Widget
 class ProfilePageWidget extends StatefulWidget {
-  const ProfilePageWidget({Key? key}) : super(key: key);
+  //const ProfilePageWidget({Key? key}) : super(key: key);
+  final UserData user;
+
+  //**Constructor
+  const ProfilePageWidget({Key? key, required this.user}) : super(key: key);
 
   @override
-  _ProfilePageWidgetState createState() => _ProfilePageWidgetState();
+  _ProfilePageWidgetState createState() => _ProfilePageWidgetState(user);
 }
 
 class _ProfilePageWidgetState extends State<ProfilePageWidget> {
   //User Variables
-  final String _userName = 'Username';
+  late UserData user = UserData(username: 'Username');
 
-  //
-  final List<hikeData> _hikesList = [
-    hikeData(title: 'Main Chip Ross Loop', distance: 7.7, difficulty: 4.0, owned: true, comments: true, private: true),
-    hikeData(title: 'Bald Hill to Cardwell Hill', distance: 2.5, difficulty: 2.5, owned: true, comments: false, private: true),
-    hikeData(title: 'Fitton Green trail', distance: 1.2, difficulty: 1.5, owned: false, comments: true, private: false),
-    hikeData(title: 'C2C Trail', distance: 12.8, difficulty: 4.0, owned: false, comments: true, private: false),
-    hikeData(title: 'McDonald Farm', distance: 4.8, difficulty: 3.5, owned: true, comments: true, private: false),
-    hikeData(title: 'Muddy Road', distance: 0.3, difficulty: 1.0, owned: true, comments: false, private: true),
-  ];
-  //
+  //**Constructor
+  _ProfilePageWidgetState(this.user);
 
 
   @override
@@ -48,7 +44,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                     child: Container(
                       margin: const EdgeInsets.fromLTRB(0, 40, 0, 0),
                       child: Text(
-                        _userName,
+                        user.username,
                         textAlign: TextAlign.center,
                         maxLines: 2,
                         style: const TextStyle(
@@ -90,7 +86,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                       margin: const EdgeInsets.fromLTRB(0, 35, 0, 0),
                       child: ElevatedButton.icon(
                         onPressed: () {
-                          print('Logging Out $_userName');
+                          print('Logging Out ${user.username}');
                         },
                         icon: const Icon(
                           Icons.exit_to_app_rounded,
@@ -143,7 +139,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children:
                         //**USER HIKES GO HERE
-                        _hikesList.map((hike) => PPHikeWidget(hikedata: hike)).toList(),
+                        user.hikesList.map((hike) => PPHikeWidget(hikedata: hike)).toList(),
                     ),
                   ),
                 )
