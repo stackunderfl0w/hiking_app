@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hiking_app/Classes/HikeData.dart';
 import 'Custom_Widgets/PPHikeWidget.dart';
 import '../Classes/UserData.dart';
 
@@ -85,12 +84,21 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children:const [
                     Text(
                       'No User Hikes Found',
                       style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                        color: Color.fromARGB(255,55, 89, 65),
+                      ),
+                    ),
+                    Text(
+                      'Go to the exploration or planner page to start a hike!',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
                         fontSize: 14,
                         color: Color.fromARGB(255,55, 89, 65),
                       ),
