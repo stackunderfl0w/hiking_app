@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hiking_app/Classes/HikeData.dart';
 import 'Custom_Widgets/PPHikeWidget.dart';
 import '../Classes/UserData.dart';
 
@@ -21,6 +22,87 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
   //**Constructor
   _ProfilePageWidgetState(this.user);
 
+
+  //**Methods
+  Widget getHikeWidgets(UserData user) {
+    //If user hikes were defined for this user
+    if(user.hikesList != null) {
+        return Expanded(
+          flex: 2,
+          child: Container(
+              margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+              //**Divider Between Both Columns in Decoration
+              decoration: const BoxDecoration(
+                border: Border(
+                    top: BorderSide(
+                      color: Color.fromARGB(255,55, 89, 65),
+                      width: 2.0,
+                    )
+                ),
+                color: Color.fromARGB(255, 192, 251, 208),
+              ),
+
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: SingleChildScrollView(
+                  child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children:
+                      //**US?.R HIKES GO HERE
+                      user.hikesList!.map((hike) => PPHikeWidget(hikedata: hike)).toList(),//;
+                    //if(user.hikesList.isEmpty == false )
+                    // user.hikesList.map((hike) => PPHikeWidget(hikedata: hike)).toList(),
+
+                  ),
+                ),
+              )
+          ),
+        );//user.hikesList.map((hike) => PPHikeWidget(hikedata: hike)).toList();
+    }
+    //No User hikes defined
+    else {
+      return Expanded(
+        flex: 2,
+        child: Container(
+            margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+            padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+            //**Divider Between Both Columns in Decoration
+            decoration: const BoxDecoration(
+              border: Border(
+                  top: BorderSide(
+                    color: Color.fromARGB(255,55, 89, 65),
+                    width: 2.0,
+                  )
+              ),
+              color: Color.fromARGB(255, 192, 251, 208),
+            ),
+
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children:const [
+                    Text(
+                      'No User Hikes Found',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Color.fromARGB(255,55, 89, 65),
+                      ),
+                    ),
+                  ]
+                ),
+              ),
+            )
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,40 +196,9 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
             ),
 
             //**Hike List Column
-            Expanded(
-              flex: 2,
-              child: Container(
-                margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                //**Divider Between Both Columns in Decoration
-                decoration: const BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                      color: Color.fromARGB(255,55, 89, 65),
-                      width: 2.0,
-                    )
-                  ),
-                  color: Color.fromARGB(255, 192, 251, 208),
-                ),
+             getHikeWidgets(user),
 
-                child: Container(
-                  margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children:
-                        //**USER HIKES GO HERE
-                        user.hikesList.map((hike) => PPHikeWidget(hikedata: hike)).toList(),
-                    ),
-                  ),
-                )
-              ),
-            )
           ],
-
-
         )
     );
   }

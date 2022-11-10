@@ -164,7 +164,7 @@ class _PlannerState extends State<Planner> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Color.fromARGB(103, 0, 250, 67), //this controls the backround color
+        color: Color.fromARGB(103, 0, 250, 67), //this controls the background color
 
         child: const Center( //it was blue lining if I didn't have this. Idk why but ok
           child: Text(
