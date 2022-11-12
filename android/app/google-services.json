@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "140142267924",
+    "project_id": "hikelist-32120",
+    "storage_bucket": "hikelist-32120.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:140142267924:android:d4ae6e177078bb8645a101",
+        "android_client_info": {
+          "package_name": "com.computerwhisperers.hiking_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "140142267924-086267i2g14k4kmpvq7h2amnsr7scv2o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCykiI0PFhwZqZYLae_EeLdaBQpzcy_AyQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "140142267924-086267i2g14k4kmpvq7h2amnsr7scv2o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
