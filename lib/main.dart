@@ -3,6 +3,7 @@ import 'map.dart';
 import 'location.dart';
 import 'ProfilePage/profile_page.dart';
 import 'Classes/UserData.dart';
+import 'LoginPage/Login.dart';
 
 void main(List<String> args) { //just starts the screen
   runApp(myApp());
@@ -23,7 +24,7 @@ class myApp extends StatelessWidget { //as of now this is complete I think
           hoverColor: Colors.transparent
       ),
       debugShowCheckedModeBanner: false, //idk why this is here but the geeksforgeeks page had it
-      home: const HomePage(),
+      home: const LoginPage(),
     );
   }
 }
