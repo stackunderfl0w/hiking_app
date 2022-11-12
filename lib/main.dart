@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'map.dart';
-import 'location.dart';
-import 'profile_page.dart';
-
 void main(List<String> args) { //just starts the screen
   runApp(myApp());
 }
@@ -41,7 +38,7 @@ class _HomePageState extends State<HomePage> {
   final pages = [
     const Map(),
     const Planner(),
-    const ProfilePageWidget(),
+    const Account(),
   ];
 
   @override
@@ -137,13 +134,12 @@ class _MapState extends State<Map> {
 
   @override
   Widget build(BuildContext context) {
-    init_location();
     return Container(
         color: Color.fromARGB(103, 0, 250, 67), //this controls the backround color
 
         child: Center( //it was blue lining if I didn't have this. Idk why but ok
           //child: map()
-          child: FullMap(lineEditor: true, showUserLocation: true),
+          child: FullMap(lineEditor: true),
           //child: FullMap(lineLayer: true),
         )
     );
