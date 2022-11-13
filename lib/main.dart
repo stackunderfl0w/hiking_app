@@ -1,12 +1,19 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hiking_app/LoginPage/wrapper.dart';
+import 'package:hiking_app/Services/auth.dart';
+import 'package:provider/provider.dart';
 import 'map.dart';
 import 'location.dart';
 import 'ProfilePage/profile_page.dart';
 import 'Classes/UserData.dart';
 import 'LoginPage/Login.dart';
+import 'package:provider/provider.dart';
 
-void main(List<String> args) { //just starts the screen
+void main() async {
+  //Initializes firebase core
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(myApp());
 }
 
@@ -16,16 +23,23 @@ class myApp extends StatelessWidget { //as of now this is complete I think
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Hiking App",
-      theme: ThemeData(
-          primaryColor: Color.fromARGB(255, 4, 75, 22),
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          hoverColor: Colors.transparent
+    return StreamProvider<UserData?>.value(
+      //The Stream provider listens and updates the user data so that all widgets can access the UserData
+      value: AuthService().user,
+      initialData: null,
+      catchError: (_, __) => null,
+
+      child: MaterialApp(
+        title: "Hiking App",
+        theme: ThemeData(
+            primaryColor: Color.fromARGB(255, 4, 75, 22),
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            hoverColor: Colors.transparent
+        ),
+        debugShowCheckedModeBanner: false, //idk why this is here but the geeksforgeeks page had it
+        home: const Wrapper(),
       ),
-      debugShowCheckedModeBanner: false, //idk why this is here but the geeksforgeeks page had it
-      home: const Wrapper(),
     );
   }
 }
@@ -44,7 +58,7 @@ class _HomePageState extends State<HomePage> {
   final pages = [
     const Map(),
     const Planner(),
-    ProfilePageWidget(user: UserData(username: 'Bill Guy')),
+    ProfilePageWidget(),
   ];
 
   @override

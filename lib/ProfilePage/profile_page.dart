@@ -1,31 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'Custom_Widgets/PPHikeWidget.dart';
 import '../Classes/UserData.dart';
+import '../Services/auth.dart';
 
 //**Main Profile Page Widget
 class ProfilePageWidget extends StatefulWidget {
   //const ProfilePageWidget({Key? key}) : super(key: key);
-  final UserData user;
+  //final UserData user;
 
   //**Constructor
-  const ProfilePageWidget({Key? key, required this.user}) : super(key: key);
+  const ProfilePageWidget({Key? key,/*, required this.user*/}) : super(key: key);
 
   @override
-  _ProfilePageWidgetState createState() => _ProfilePageWidgetState(user);
+  _ProfilePageWidgetState createState() => _ProfilePageWidgetState();
 }
 
 class _ProfilePageWidgetState extends State<ProfilePageWidget> {
   //User Variables
-  late UserData user = UserData(username: 'Username');
+ final AuthService _auth = AuthService();
 
   //**Constructor
-  _ProfilePageWidgetState(this.user);
+  //_ProfilePageWidgetState();
 
 
   //**Methods
-  Widget getHikeWidgets(UserData user) {
+  Widget getHikeWidgets(UserData? user) {
     //If user hikes were defined for this user
-    if(user.hikesList != null) {
+    if(user?.hikesList != null) {
         return Expanded(
           flex: 2,
           child: Container(
@@ -49,12 +51,14 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children:
+                      children: const [
+                        Text('lol'),
+                        Text('placeholder for hikes'),
                       //**US?.R HIKES GO HERE
-                      user.hikesList!.map((hike) => PPHikeWidget(hikedata: hike)).toList(),//;
+                      //user?.hikesList.map((hike) => PPHikeWidget(hikedata: hike)).toList(),//;
                     //if(user.hikesList.isEmpty == false )
-                    // user.hikesList.map((hike) => PPHikeWidget(hikedata: hike)).toList(),
-
+                     //user?.hikesList.map((hike) => PPHikeWidget(hikedata: hike)).toList(),
+                      ],
                   ),
                 ),
               )
@@ -134,7 +138,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                     child: Container(
                       margin: const EdgeInsets.fromLTRB(0, 40, 0, 0),
                       child: Text(
-                        user.username,
+                        'Username',
                         textAlign: TextAlign.center,
                         maxLines: 2,
                         style: const TextStyle(
@@ -175,8 +179,9 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                     child: Container(
                       margin: const EdgeInsets.fromLTRB(0, 35, 0, 0),
                       child: ElevatedButton.icon(
-                        onPressed: () {
-                          print('Logging Out ${user.username}');
+                        onPressed: () async {
+                          //print('Logging Out ${user.uid}');
+                          await _auth.signOut();
                         },
                         icon: const Icon(
                           Icons.exit_to_app_rounded,
@@ -204,7 +209,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
             ),
 
             //**Hike List Column
-             getHikeWidgets(user),
+             //getHikeWidgets(),
 
           ],
         )

@@ -1,12 +1,12 @@
 import 'HikeData.dart';
 
 class UserData {
-  String username = 'UserName';
+  final String uid;
   String password = 'apples';
   List <HikeData>? hikesList;
 
   //Constructor
-  UserData({required this.username});
+  UserData({ required this.uid});
 
   //Methods
   addHike(HikeData hike) {

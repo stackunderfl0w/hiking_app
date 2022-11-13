@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hiking_app/Services/auth.dart';
 
 /*
 void main() => runApp(const MyApp());
@@ -32,6 +33,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  final AuthService _auth =AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -92,9 +95,20 @@ class _LoginPageState extends State<LoginPage> {
                       backgroundColor: Color.fromARGB(255, 0, 86, 23),
                     ),
                     child: const Text('Login'),
-                    onPressed: () {
-                      print(nameController.text);
-                      print(passwordController.text);
+                    onPressed: () async {
+                      //print(nameController.text);
+                      //print(passwordController.text);
+
+                      //Sign in anonymously
+                      dynamic result = await _auth.signInAnon();
+                      if(result == null) {
+                        //Error, wasn't able to sign in (User object was NULL)
+                        print('ERROR signing in');
+                      } else {
+                        //User was able to sign in
+                        print('Anonymous sign in!');
+                        //print(result.uid);
+                      }
                     },
                   )
               ),
