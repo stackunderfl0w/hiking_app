@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hiking_app/LoginPage/wrapper.dart';
 import 'map.dart';
 import 'location.dart';
 import 'ProfilePage/profile_page.dart';
@@ -24,7 +25,7 @@ class myApp extends StatelessWidget { //as of now this is complete I think
           hoverColor: Colors.transparent
       ),
       debugShowCheckedModeBanner: false, //idk why this is here but the geeksforgeeks page had it
-      home: const LoginPage(),
+      home: const Wrapper(),
     );
   }
 }
