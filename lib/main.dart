@@ -1,12 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hiking_app/Classes/Utils.dart';
-import 'package:hiking_app/LoginPage/wrapper.dart';
+import 'package:hiking_app/Pages/LoginPage/wrapper.dart';
 import 'package:hiking_app/Services/auth.dart';
 import 'package:provider/provider.dart';
 import 'map.dart';
 import 'location.dart';
-import 'ProfilePage/profile_page.dart';
+import 'Pages/ProfilePage/profile_page.dart';
 import 'Classes/UserData.dart';
 
 

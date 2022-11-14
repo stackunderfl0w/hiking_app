@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hiking_app/AuthPage/auth_page.dart';
-
+import 'package:hiking_app/Pages/AuthPage/auth_page.dart';
+import 'package:hiking_app/Pages/LoginPage/Login.dart';
 import 'package:hiking_app/main.dart';
-
+import 'package:provider/provider.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key? key}) : super(key: key);
