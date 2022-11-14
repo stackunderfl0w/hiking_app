@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hiking_app/Classes/Utils.dart';
 import 'package:hiking_app/LoginPage/wrapper.dart';
 import 'package:hiking_app/Services/auth.dart';
 import 'package:provider/provider.dart';
@@ -7,8 +8,7 @@ import 'map.dart';
 import 'location.dart';
 import 'ProfilePage/profile_page.dart';
 import 'Classes/UserData.dart';
-import 'LoginPage/Login.dart';
-import 'package:provider/provider.dart';
+
 
 void main() async {
   //Initializes firebase core
@@ -17,9 +17,13 @@ void main() async {
   runApp(myApp());
 }
 
+//Nav key for updating navigation
+final navigatorKey = GlobalKey<NavigatorState>();
+
 //this is where everything is tied together
 class myApp extends StatelessWidget { //as of now this is complete I think
   const myApp({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +34,8 @@ class myApp extends StatelessWidget { //as of now this is complete I think
       catchError: (_, __) => null,
 
       child: MaterialApp(
+        scaffoldMessengerKey: Utils.messengerKey,
+        navigatorKey: navigatorKey,
         title: "Hiking App",
         theme: ThemeData(
             primaryColor: Color.fromARGB(255, 4, 75, 22),

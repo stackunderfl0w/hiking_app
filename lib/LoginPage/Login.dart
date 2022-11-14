@@ -1,5 +1,10 @@
+import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:hiking_app/Classes/Utils.dart';
 import 'package:hiking_app/Services/auth.dart';
+import 'package:hiking_app/main.dart';
 
 /*
 void main() => runApp(const MyApp());
@@ -24,14 +29,20 @@ class MyApp extends StatelessWidget {
 */
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final VoidCallback onClickedSignUp;
+
+  const LoginPage({
+    Key? key,
+    required this.onClickedSignUp
+  }) : super(key: key);
+
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   final AuthService _auth =AuthService();
@@ -62,23 +73,32 @@ class _LoginPageState extends State<LoginPage> {
                   )),
               Container(
                 padding: const EdgeInsets.all(10),
-                child: TextField(
-                  controller: nameController,
+                child: TextFormField(
+                  controller: emailController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'User Name',
+                    labelText: 'Email',
                   ),
+                  autovalidateMode:  AutovalidateMode.onUserInteraction,
+                  validator: (email) =>
+                      email != null && !EmailValidator.validate(email)
+                          ? 'Enter a valid email!'
+                          : null,
                 ),
               ),
               Container(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                child: TextField(
+                child: TextFormField(
                   obscureText: true,
                   controller: passwordController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Password',
                   ),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) => value != null && value.length < 6
+                    ? 'Enter a min of 6 characters!'
+                    : null,
                 ),
               ),
               TextButton(
@@ -96,40 +116,55 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     child: const Text('Login'),
                     onPressed: () async {
-                      //print(nameController.text);
-                      //print(passwordController.text);
-
-                      //Sign in anonymously
-                      dynamic result = await _auth.signInAnon();
-                      if(result == null) {
-                        //Error, wasn't able to sign in (User object was NULL)
-                        print('ERROR signing in');
-                      } else {
-                        //User was able to sign in
-                        print('Anonymous sign in!');
-                        //print(result.uid);
-                      }
+                      //Sign in with email and password
+                      signIn();
                     },
                   )
               ),
               Row(
-                children: <Widget>[
-                  const Text("Don't not have account?"),
-                  TextButton(
-                    child: const Text(
-                      'Sign up',
-                      style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 0, 86, 23)),
-                    ),
-                    onPressed: () {
-                      //signup screen
-                    },
-                  )
-                ],
                 mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+
+                  RichText(text: TextSpan(
+                    text: "Don't have an account?   ",
+                    style:  TextStyle(color: Colors.black,),
+                    children: [
+                      TextSpan(
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = widget.onClickedSignUp,
+                        text: 'Sign Up',
+                        style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 0, 86, 23)),
+                      )
+                    ]
+                  ))
+                ],
               ),
             ],
           )
       ),
     );
+  }
+
+  Future signIn() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Center(child: CircularProgressIndicator(color: Color(0xFF1B5E20),)),
+    );
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+    } on FirebaseAuthException catch(e) {
+      print(e);
+
+      Utils.showSnackBar(e.message);
+    }
+
+    //Gets rid of the progress indicator once we are done.
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+
   }
 }

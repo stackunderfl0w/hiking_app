@@ -1,6 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'Custom_Widgets/PPHikeWidget.dart';
 import '../Classes/UserData.dart';
 import '../Services/auth.dart';
 
@@ -18,8 +17,8 @@ class ProfilePageWidget extends StatefulWidget {
 
 class _ProfilePageWidgetState extends State<ProfilePageWidget> {
   //User Variables
- final AuthService _auth = AuthService();
-
+  final AuthService _auth = AuthService();
+  final user = FirebaseAuth.instance.currentUser!;
   //**Constructor
   //_ProfilePageWidgetState();
 
@@ -138,14 +137,14 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                     child: Container(
                       margin: const EdgeInsets.fromLTRB(0, 40, 0, 0),
                       child: Text(
-                        'Username',
+                        user.email!,
                         textAlign: TextAlign.center,
                         maxLines: 2,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 30,
+                          fontSize: 20,
                           color: Color(0xFF1B5E20),
-                          letterSpacing: 2.0,
+                          letterSpacing: 1.0,
                           shadows: <Shadow>[
                             Shadow(
                               offset: Offset(2.0, 2.0),
@@ -179,10 +178,8 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                     child: Container(
                       margin: const EdgeInsets.fromLTRB(0, 35, 0, 0),
                       child: ElevatedButton.icon(
-                        onPressed: () async {
-                          //print('Logging Out ${user.uid}');
-                          await _auth.signOut();
-                        },
+                        //Signs out the current user.
+                        onPressed: () => FirebaseAuth.instance.signOut(),
                         icon: const Icon(
                           Icons.exit_to_app_rounded,
                           size: 24.0,
