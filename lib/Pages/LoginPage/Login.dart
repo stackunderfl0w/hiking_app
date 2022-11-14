@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hiking_app/Classes/Utils.dart';
+import 'package:hiking_app/Pages/ForgotPasswordPage/forgot_password_page.dart';
 import 'package:hiking_app/Services/auth.dart';
 import 'package:hiking_app/main.dart';
 
@@ -101,12 +102,26 @@ class _LoginPageState extends State<LoginPage> {
                     : null,
                 ),
               ),
-              TextButton(
-                onPressed: () {
-                  //forgot password screen
-                },
-                child: const Text('Forgot Password', style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 0, 86, 23))),
+
+              //Spacing
+              SizedBox(height:10),
+              Container(
+                alignment: Alignment.center,
+                child: GestureDetector(
+                  child: const Text(
+                    'Forgot Password',
+                    style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        fontSize: 20,
+                        color: Color.fromARGB(255, 0, 86, 23))
+                    ),
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ForgotPasswordPage() )),
+                ),
               ),
+              //Spacing
+              SizedBox(height:10),
+
               Container(
                   height: 50,
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),

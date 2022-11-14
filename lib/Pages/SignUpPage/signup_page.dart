@@ -83,12 +83,10 @@ class _SignUpPageState extends State<SignUpPage> {
                         : null,
                   ),
                 ),
-                /*TextButton(
-                  onPressed: () {
-                    //forgot password screen
-                  },
-                  child: const Text('Forgot Password', style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 0, 86, 23))),
-                ),*/
+
+                //Spacing
+                SizedBox(height:43),
+
                 Container(
                     height: 50,
                     padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
