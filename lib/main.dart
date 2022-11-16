@@ -4,10 +4,13 @@ import 'package:hiking_app/Classes/Utils.dart';
 import 'package:hiking_app/Pages/LoginPage/wrapper.dart';
 import 'package:hiking_app/Services/auth.dart';
 import 'package:provider/provider.dart';
+
 import 'map.dart';
+import 'planner_page.dart';
 import 'location.dart';
 import 'Pages/ProfilePage/profile_page.dart';
 import 'Classes/UserData.dart';
+
 
 
 void main() async {
@@ -24,9 +27,9 @@ final navigatorKey = GlobalKey<NavigatorState>();
 class myApp extends StatelessWidget { //as of now this is complete I think
   const myApp({super.key});
 
-
   @override
   Widget build(BuildContext context) {
+    init_location();
     return StreamProvider<UserData?>.value(
       //The Stream provider listens and updates the user data so that all widgets can access the UserData
       value: AuthService().user,
@@ -160,7 +163,6 @@ class _MapState extends State<Map> {
 
   @override
   Widget build(BuildContext context) {
-    init_location();
     return Container(
         color: Color.fromARGB(103, 0, 250, 67), //this controls the backround color
 
@@ -173,31 +175,3 @@ class _MapState extends State<Map> {
   }
 }
 
-class Planner extends StatefulWidget {
-  const Planner({Key? key}) : super(key: key);
-
-  @override
-  _PlannerState createState() => _PlannerState();
-}
-
-class _PlannerState extends State<Planner> {
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        color: Color.fromARGB(103, 0, 250, 67), //this controls the background color
-
-        child: const Center( //it was blue lining if I didn't have this. Idk why but ok
-          child: Text(
-              "Planner",
-              style: TextStyle(
-                color: Colors.green,
-                fontSize: 45,
-                fontWeight: FontWeight.w500,
-              )
-          ),
-        )
-    );
-  }
-}

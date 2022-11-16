@@ -17,10 +17,11 @@ var testPolyline = Polyline(color: Colors.deepOrange, points: []);
 
 
 class FullMap extends StatefulWidget {
-  bool lineLayer=false;
-  bool lineEditor=false;
-  bool showUserLocation=false;
-  FullMap({Key? key, this.lineLayer=false, this.lineEditor=false, this.showUserLocation=false}) : super(key: key);
+  bool lineLayer;
+  bool lineEditor;
+  bool showUserLocation;
+  double default_zoom;
+  FullMap({Key? key, this.lineLayer=false, this.lineEditor=false, this.showUserLocation=false, this.default_zoom=15}) : super(key: key);
 
   @override
   State<FullMap> createState() => _FullMapState();
@@ -58,6 +59,7 @@ class _FullMapState extends State<FullMap> {
     bool lineLayer=widget.lineLayer;
     bool lineEditor=widget.lineEditor;
     bool showUserLocation=widget.showUserLocation;
+    double default_zoom=widget.default_zoom;
     return Scaffold(
       body: FlutterMap(
         mapController: mapController,
@@ -114,7 +116,7 @@ class _FullMapState extends State<FullMap> {
         child: const Icon(Icons.replay),
         onPressed: () {
           //mapController.move(LatLng(current_location.latitude!,current_location.longitude!), 11);
-          mapController.moveAndRotate(current_LatLng, 17,0);
+          mapController.moveAndRotate(current_LatLng, default_zoom,0);
         },
       ),
     );

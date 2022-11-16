@@ -6,6 +6,13 @@ class HikePoint{
   double time;
   HikePoint({required this.latitude, required this.longitude, this.time=0});
 }
+class HikeDraft{
+  String title = 'Hike Title';
+  String owner = 'Admin';
+  List<HikePoint> points;
+
+  HikeDraft({required this.title, required this.points });
+}
 class HikeData {
   String title = 'Hike Title';
   String owner = 'Admin';
@@ -17,6 +24,7 @@ class HikeData {
   double difficulty = 0;
   bool comments = true;
   bool private = true;
+
   List<HikePoint> points;
 
 
