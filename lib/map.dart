@@ -13,15 +13,15 @@ import 'location.dart';
 final mapController = MapController();
 final List<LatLng> cords=[];
 List<Polyline> polyLines = [];
-var testPolyline = Polyline(color: Colors.deepOrange, points: []);
-
 
 class FullMap extends StatefulWidget {
   bool lineLayer;
   bool lineEditor;
+  List<LatLng>? editor_points;
   bool showUserLocation;
-  double default_zoom;
-  FullMap({Key? key, this.lineLayer=false, this.lineEditor=false, this.showUserLocation=false, this.default_zoom=15}) : super(key: key);
+  double defaultZoom;
+
+  FullMap({Key? key, this.lineLayer=false, this.lineEditor=false, this.editor_points ,this.showUserLocation=false, this.defaultZoom=15}) : super(key: key);
 
   @override
   State<FullMap> createState() => _FullMapState();
@@ -31,20 +31,25 @@ class _FullMapState extends State<FullMap> {
   late PolyEditor polyEditor;
   final mapController = MapController();
   late final Timer _timer;
+  var testPolyline = Polyline(color: Colors.deepOrange, points: []);
 
 
   List<Polyline> polyLines = [];
   @override
   void initState() {
     super.initState();
-    polyEditor = PolyEditor(
-      addClosePathMarker: false,
-      points: testPolyline.points,
-      pointIcon: const Icon(Icons.crop_square, size: 23),
-      intermediateIcon: const Icon(Icons.lens, size: 15, color: Colors.grey),
-      callbackRefresh: () {print("polyedipolyLinest setstate"); setState(() {} ); },
-    );
-    polyLines.add(testPolyline);
+    if(widget.lineEditor){
+      testPolyline=Polyline(color: Colors.deepOrange, points: widget.editor_points!);
+      polyEditor = PolyEditor(
+        addClosePathMarker: false,
+        points:testPolyline.points,
+        pointIcon: const Icon(Icons.crop_square, size: 23),
+        intermediateIcon: const Icon(Icons.lens, size: 15, color: Colors.grey),
+        callbackRefresh: () {print("polyedipolyLinest setstate"); setState(() {} ); },
+      );
+      polyLines.add(testPolyline);
+    }
+
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {setState(() {});});
   }
   @override
@@ -59,16 +64,26 @@ class _FullMapState extends State<FullMap> {
     bool lineLayer=widget.lineLayer;
     bool lineEditor=widget.lineEditor;
     bool showUserLocation=widget.showUserLocation;
-    double default_zoom=widget.default_zoom;
+    double defaultZoom=widget.defaultZoom;
+    List<LatLng>? editorPoints=widget.editor_points;
+    if(lineEditor&&widget.editor_points == null){
+      lineEditor=false;
+      print("ERROR: LINE EDITOR REQUESTED BUT NO TARGET ARRAY PROVIDED");
+    }
     return Scaffold(
       body: FlutterMap(
         mapController: mapController,
         options: MapOptions(
           absorbPanEventsOnScrollables: false,
           center: LatLng(51.5, -0.09),
-          zoom: 5,
+          zoom: defaultZoom,
+          maxZoom: 18,
+          minZoom: 5,
           onTap: (_, ll) {
-            polyEditor.add(testPolyline.points, ll);
+            if(lineEditor){
+              polyEditor.add(testPolyline.points, ll);
+              print(testPolyline.points);
+            }
           },
         ),
         nonRotatedChildren: [
@@ -84,7 +99,7 @@ class _FullMapState extends State<FullMap> {
             userAgentPackageName: 'dev.fleaflet.flutter_map.example',
           ),
           if (lineEditor == true) ...[
-            PolylineLayer(polylines: polyLines),
+            PolylineLayer(polylines: [testPolyline]),
             DragMarkers(markers:  polyEditor.edit()),
           ]
           else if (lineLayer == true) ...[
@@ -116,7 +131,7 @@ class _FullMapState extends State<FullMap> {
         child: const Icon(Icons.replay),
         onPressed: () {
           //mapController.move(LatLng(current_location.latitude!,current_location.longitude!), 11);
-          mapController.moveAndRotate(current_LatLng, default_zoom,0);
+          mapController.moveAndRotate(current_LatLng, defaultZoom,0);
         },
       ),
     );

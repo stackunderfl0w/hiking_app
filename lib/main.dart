@@ -141,7 +141,7 @@ class _MapState extends State<Map> {
 
         child: Center( //it was blue lining if I didn't have this. Idk why but ok
           //child: map()
-          child: FullMap(showUserLocation: true),
+          child: FullMap(showUserLocation: true, ),
           //child: FullMap(lineLayer: true),
         )
     );

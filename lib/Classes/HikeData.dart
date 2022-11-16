@@ -1,17 +1,21 @@
-
+import 'package:latlong2/latlong.dart';
 class HikePoint{
   //Types subject to change
-  double latitude;
-  double longitude;
+  LatLng point;
   double time;
-  HikePoint({required this.latitude, required this.longitude, this.time=0});
+  HikePoint({required this.point, this.time=0});
 }
 class HikeDraft{
   String title = 'Hike Title';
   String owner = 'Admin';
-  List<HikePoint> points;
-
-  HikeDraft({required this.title, required this.points });
+  late List<LatLng> points;
+  // this is not necessary and just left as a reference for me
+  HikeDraft( this.title,List<LatLng> p){
+    points=[];
+    for ( var i in p ) {
+      points.add( i);
+    }
+  }
 }
 class HikeData {
   String title = 'Hike Title';
