@@ -88,59 +88,32 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              enableFeedback: false,
               onPressed: () {
-                setState(() {
-                  pageIndex = 0;
-                });
+                setState(() {pageIndex = 0;});
               },
-              icon: pageIndex == 0
-                  ? const Icon(
+              icon: Icon(
                 Icons.landscape,
-                color: Colors.brown,
-                size: 35,
-              )
-                  : const Icon(
-                Icons.landscape_outlined,
-                color: Colors.white,
-                size: 35,
+                color: pageIndex == 0?Colors.brown:Colors.white,
+                size: 40,
               ),
             ),
             IconButton(
-              enableFeedback: false,
               onPressed: () {
-                setState(() {
-                  pageIndex = 1;
-                });
+                setState(() {pageIndex = 1;});
               },
-              icon: pageIndex == 1
-                  ? const Icon(
+              icon: Icon(
                 Icons.map,
-                color: Colors.brown,
-                size: 35,
-              )
-                  : const Icon(
-                Icons.map_outlined,
-                color: Colors.white,
+                color: pageIndex == 1?Colors.brown:Colors.white,
                 size: 35,
               ),
             ),
             IconButton(
-              enableFeedback: false,
               onPressed: () {
-                setState(() {
-                  pageIndex = 2;
-                });
+                setState(() {pageIndex = 2;});
               },
-              icon: pageIndex == 2
-                  ? const Icon(
+              icon: Icon(
                 Icons.account_circle,
-                color: Colors.brown,
-                size: 35,
-              )
-                  : const Icon(
-                Icons.account_circle_outlined,
-                color: Colors.white,
+                color: pageIndex == 2?Colors.brown:Colors.white,
                 size: 35,
               ),
             ),
