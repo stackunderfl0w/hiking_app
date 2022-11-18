@@ -24,21 +24,26 @@ class _PlannerState extends State<Planner> {
     if(page==0){
       return Scaffold(
         backgroundColor: Colors.greenAccent,
-        body:Container(
-            padding: const EdgeInsets.fromLTRB(50, 100, 50, 100),
-            child: Column(
-              children: [
-                for ( var i in draft_hikes ) GestureDetector(
-                  onTap: () { setState(() {page=1; points=i.points;}); },
-                  child: Container(
-                    width: double.infinity,
-                    height: 50,
-                    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    decoration: const BoxDecoration(color: Colors.green),
-                    child: Text(i.title),
-                  )
-                ),
-            ],
+          body:SingleChildScrollView(
+            child:Container(
+              padding: const EdgeInsets.fromLTRB(50, 100, 50, 100),
+              child: Column(
+                children: [
+                  for ( var i in draft_hikes ) ...[
+                    GestureDetector(
+                      onTap: () { setState(() {page=1; points=i.points;}); },
+                      child: Container(
+                      width: double.infinity,
+                      height: 75,
+                      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                      decoration: const BoxDecoration(color: Colors.green),
+                      child: Text(i.title),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                  ]
+              ],
+            ),
           ),
         ),
         floatingActionButton: FloatingActionButton(
