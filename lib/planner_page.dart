@@ -6,7 +6,7 @@ import 'Classes/HikeData.dart';
 import 'package:latlong2/latlong.dart';
 import 'map.dart';
 
-List<HikeDraft> draft_hikes=[HikeDraft("Draft Hike 1", [LatLng(0, 0)])];
+List<HikeData> draft_hikes=[HikeData.draft(title:"Draft Hike 1", points:[LatLng(0, 0)])];
 
 class Planner extends StatefulWidget {
   const Planner({Key? key}) : super(key: key);
@@ -66,7 +66,7 @@ class _PlannerState extends State<Planner> {
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
           onPressed: () {
-            draft_hikes.add(HikeDraft("title${Random().nextInt(999)}",points));
+            draft_hikes.add(HikeData.draft(title:"title${Random().nextInt(999)}",points:points));
             setState(() {page=0;});
             // print(points);
             points=[];

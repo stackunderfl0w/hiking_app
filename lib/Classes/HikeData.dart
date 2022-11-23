@@ -1,11 +1,11 @@
 import 'package:latlong2/latlong.dart';
-class HikePoint{
+/*class HikePoint{
   //Types subject to change
   LatLng point;
   double time;
   HikePoint({required this.point, this.time=0});
-}
-class HikeDraft{
+}*/
+/*class HikeDraft{
   String title = 'Hike Title';
   String owner = 'Admin';
   late List<LatLng> points;
@@ -16,7 +16,7 @@ class HikeDraft{
       points.add( i);
     }
   }
-}
+}*/
 class HikeData {
   String title = 'Hike Title';
   String owner = 'Admin';
@@ -29,8 +29,16 @@ class HikeData {
   bool comments = true;
   bool private = true;
 
-  List<HikePoint> points;
+  //List<HikePoint> points;
+  List<LatLng> points;
+  late List<double> times;
 
 
-  HikeData({required this.title, required this.points, required this.difficulty, required this.private });
+
+  HikeData({required this.title, required this.points, required this.times, required this.difficulty, required this.private });
+  HikeData.draft({required this.title, required this.points }){
+    difficulty=0;
+    private=true;
+    times=[0];
+  }
 }

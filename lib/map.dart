@@ -12,6 +12,8 @@ import 'location.dart';
 
 final mapController = MapController();
 final List<LatLng> cords=[];
+LatLng globalCurrentViewLocation=LatLng(46.3130178, 114.1136529);
+//double globalCurrentZoom=12;
 List<Polyline> polyLines = [];
 
 class FullMap extends StatefulWidget {
@@ -70,12 +72,14 @@ class _FullMapState extends State<FullMap> {
       lineEditor=false;
       print("ERROR: LINE EDITOR REQUESTED BUT NO TARGET ARRAY PROVIDED");
     }
+    print("create map centered at");
+    print(globalCurrentViewLocation);
     return Scaffold(
       body: FlutterMap(
         mapController: mapController,
         options: MapOptions(
           absorbPanEventsOnScrollables: false,
-          center: LatLng(51.5, -0.09),
+          center: globalCurrentViewLocation,
           zoom: defaultZoom,
           maxZoom: 18,
           minZoom: 5,
@@ -85,6 +89,9 @@ class _FullMapState extends State<FullMap> {
               print(testPolyline.points);
             }
           },
+          onPositionChanged: (MapPosition position, bool hasGesture){
+            globalCurrentViewLocation=position.center!;
+          }
         ),
         nonRotatedChildren: [
           AttributionWidget.defaultWidget(
