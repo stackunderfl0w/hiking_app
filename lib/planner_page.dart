@@ -6,7 +6,7 @@ import 'Classes/HikeData.dart';
 import 'package:latlong2/latlong.dart';
 import 'map.dart';
 
-List<HikeDraft> draft_hikes=[HikeDraft("Draft Hike 1", [LatLng(0, 0)])];
+List<HikeData> draft_hikes=[HikeData.draft(title:"Draft Hike 1", points:[LatLng(0, 0)])];
 
 class Planner extends StatefulWidget {
   const Planner({Key? key}) : super(key: key);
@@ -35,7 +35,7 @@ class _PlannerState extends State<Planner> {
                       child: Container(
                       width: double.infinity,
                       height: 75,
-                      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                       decoration: const BoxDecoration(color: Colors.green),
                       child: Text(i.title),
                       ),
@@ -58,14 +58,31 @@ class _PlannerState extends State<Planner> {
       return Scaffold(
         backgroundColor: Colors.greenAccent,
         body: FullMap(defaultZoom: 13,lineEditor: true,editor_points: points,),
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          onPressed: () {
-            draft_hikes.add(HikeDraft("title${Random().nextInt(999)}",points));
-            setState(() {page=0;});
-            // print(points);
-            points=[];
-          },
+
+        floatingActionButton: Column(
+
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            FloatingActionButton(
+
+              child: const Icon(Icons.add),
+              onPressed: () {
+                draft_hikes.add(HikeData.draft(title:"title${Random().nextInt(999)}",points:points));
+                setState(() {page=0;});
+                // print(points);
+                points=[];
+              },
+            ),
+            FloatingActionButton(
+              child: const Icon(Icons.cancel),
+              onPressed: () {
+                setState(() {page=0;});
+                // print(points);
+                points=[];
+              },
+            ),
+          ],
         ),
       );
     }
