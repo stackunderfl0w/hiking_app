@@ -23,7 +23,7 @@ class _PlannerState extends State<Planner> {
   Widget build(BuildContext context) {
     if(page==0){
       return Scaffold(
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Colors.grey,
           body:SingleChildScrollView(
             child:Container(
               padding: const EdgeInsets.fromLTRB(50, 100, 50, 100),
@@ -33,11 +33,16 @@ class _PlannerState extends State<Planner> {
                     GestureDetector(
                       onTap: () { setState(() {page=1; points=i.points;}); },
                       child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            color: Colors.white,
+                        ),
                       width: double.infinity,
                       height: 75,
                       padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                      decoration: const BoxDecoration(color: Colors.green),
-                      child: Text(i.title),
+                      child: Center(
+                        child: Text(i.title, style: TextStyle(fontSize: 25),),
+                      ),
                       ),
                     ),
                     const SizedBox(height: 20),
