@@ -61,6 +61,7 @@ dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   flutter_rating_bar: ^4.0.1
+  flutter_map_tile_caching: ^6.2.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

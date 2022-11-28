@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:hiking_app/Classes/Utils.dart';
 import 'package:hiking_app/Pages/LoginPage/wrapper.dart';
 import 'package:hiking_app/Services/auth.dart';
@@ -11,12 +12,12 @@ import 'location.dart';
 import 'Pages/ProfilePage/profile_page.dart';
 import 'Classes/UserData.dart';
 
-
-
 void main() async {
   //Initializes firebase core
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  WidgetsFlutterBinding.ensureInitialized();
+  await init_cache();
   runApp(myApp());
 }
 
@@ -141,7 +142,7 @@ class _MapState extends State<Map> {
 
         child: Center( //it was blue lining if I didn't have this. Idk why but ok
           //child: map()
-          child: FullMap(showUserLocation: true, ),
+          child: FullMap(showUserLocation: true, defaultZoom: 14,),
           //child: FullMap(lineLayer: true),
         )
     );

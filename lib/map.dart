@@ -4,15 +4,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart'; // Suitable for most situations
 import 'package:flutter_map/plugin_api.dart'; // Only import if required functionality is not exposed by default
+import 'package:flutter_map_tile_caching/flutter_map_tile_caching.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter_map_line_editor/dragmarker.dart';
 import 'package:flutter_map_line_editor/polyeditor.dart';
 import 'location.dart';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 
 
 final mapController = MapController();
 final List<LatLng> cords=[];
-LatLng globalCurrentViewLocation=LatLng(46.3130178, 114.1136529);
+LatLng globalCurrentViewLocation=LatLng(44.55534, -123.27086);
 //double globalCurrentZoom=12;
 List<Polyline> polyLines = [];
 
@@ -52,7 +55,7 @@ class _FullMapState extends State<FullMap> {
       polyLines.add(testPolyline);
     }
 
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) {setState(() {});});
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {setState(() {});print(globalCurrentViewLocation);});
   }
   @override
   void dispose() {
@@ -72,8 +75,8 @@ class _FullMapState extends State<FullMap> {
       lineEditor=false;
       print("ERROR: LINE EDITOR REQUESTED BUT NO TARGET ARRAY PROVIDED");
     }
-    print("create map centered at");
-    print(globalCurrentViewLocation);
+    //print("create map centered at");
+    //print(globalCurrentViewLocation);
     return Scaffold(
       body: FlutterMap(
         mapController: mapController,
@@ -100,10 +103,18 @@ class _FullMapState extends State<FullMap> {
           ),
         ],
         children: [
-          TileLayer(
+          /*TileLayer(
             urlTemplate:
             'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
             userAgentPackageName: 'dev.fleaflet.flutter_map.example',
+          ),*/
+          TileLayer(
+            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+            tileProvider: FMTC.instance('mapcache').getTileProvider(),
+              maxZoom: 20,
+              userAgentPackageName: 'dev.fleaflet.flutter_map.example',
+              keepBuffer: 5,
+              backgroundColor: const Color(0xFFaad3df),
           ),
           if (lineEditor == true) ...[
             PolylineLayer(polylines: [testPolyline]),
@@ -145,3 +156,56 @@ class _FullMapState extends State<FullMap> {
   }
 }
 
+Future<void> init_cache() async {
+  FlutterMapTileCaching.initialise(await RootDirectory.normalCache);
+
+  FMTC.instance; // Now available from anywhere
+  String fileName = "mapcache.fmtc";
+  String dir = (await getApplicationDocumentsDirectory()).path;
+  String savePath = '$dir/$fileName';
+  print("filename=$savePath");
+
+//for a directory: await Directory(savePath).exists();
+  StoreDirectory store;
+  bool wait = true;
+  if (await File(savePath).exists()) {
+    print("outputFilePath");
+    FMTC.instance.rootDirectory.import.manual(File(savePath));
+    wait=false;
+  } else {
+    print("creating new store");
+    store = FMTC.instance('mapcache');
+    await store.manage.createAsync(); // Create the store if necessary
+    final region = CircleRegion(
+        LatLng(44.55534, -123.27086),
+        50
+    ).toDownloadable(1, 13, TileLayer(urlTemplate:
+    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',)
+    );
+    FMTC
+        .instance('mapcache')
+        .download
+        .startForeground(region: region)
+        .listen(
+          (dp) {
+        debugPrint("Dowloading..."); // Works
+      },
+      onDone: () async {
+        debugPrint("onDone");
+        FMTC
+            .instance('mapcache')
+            .export
+            .manual(File(savePath));
+        wait = false;
+      },
+      onError: (err) {
+        debugPrint("onError");
+      },
+    );
+    while (wait) {
+      print("Waiting on map to download");
+      await Future.delayed(Duration(seconds: 1));
+    }
+  }
+
+}
