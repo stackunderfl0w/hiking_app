@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hiking_app/Pages/ProfilePage/Custom_Widgets/PPHikeWidget.dart';
+import '../../Classes/HikeData.dart';
 import '../../Classes/UserData.dart';
 import '../../Services/auth.dart';
+import 'package:latlong2/latlong.dart';
 
 //**Main Profile Page Widget
 class ProfilePageWidget extends StatefulWidget {
@@ -17,16 +20,24 @@ class ProfilePageWidget extends StatefulWidget {
 
 class _ProfilePageWidgetState extends State<ProfilePageWidget> {
   //User Variables
-  final AuthService _auth = AuthService();
   final user = FirebaseAuth.instance.currentUser!;
-  //**Constructor
-  //_ProfilePageWidgetState();
+
+  //
+  final List<HikeData> _hikesList = [
+    HikeData(title: 'Main Chip Ross Loop', points: [LatLng(0, 0)], difficulty: 4.0, private: true, distance: 7.7, comments: true, owned: true),
+    HikeData(title: 'Bald Hill to Cardwell Hill', points: [LatLng(0, 0)], difficulty: 2.5, private: true, distance: 2.5, comments: false, owned: true),
+    HikeData(title: 'Fitton Green trail', points: [LatLng(0, 0)], difficulty: 1.5, private: false, distance: 1.2, comments: true, owned: false),
+    HikeData(title: 'C2C Trail', points: [LatLng(0, 0)], difficulty: 4.0, private: false, distance: 12.8, comments: true, owned: false),
+    HikeData(title: 'McDonald Farm', points: [LatLng(0, 0)], difficulty: 3.5, private: false, distance: 4.8, comments: true, owned: true),
+    HikeData(title: 'Muddy Road', points: [LatLng(0, 0)], difficulty: 1.0, private: true, distance: 0.3, comments: false, owned: true),
+  ];
+  //
 
 
   //**Methods
-  Widget getHikeWidgets(UserData? user) {
+  Widget getHikeWidgets() {
     //If user hikes were defined for this user
-    if(user?.hikesList != null) {
+    if(_hikesList != null) {
         return Expanded(
           flex: 2,
           child: Container(
@@ -50,14 +61,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        Text('lol'),
-                        Text('placeholder for hikes'),
-                      //**US?.R HIKES GO HERE
-                      //user?.hikesList.map((hike) => PPHikeWidget(hikedata: hike)).toList(),//;
-                    //if(user.hikesList.isEmpty == false )
-                     //user?.hikesList.map((hike) => PPHikeWidget(hikedata: hike)).toList(),
-                      ],
+                      children: _hikesList.map((hike) => PPHikeWidget(hikedata: hike)).toList(),
                   ),
                 ),
               )
@@ -206,7 +210,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
             ),
 
             //**Hike List Column
-             //getHikeWidgets(),
+            getHikeWidgets(),
 
           ],
         )

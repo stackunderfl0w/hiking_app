@@ -24,7 +24,7 @@ class HikeData {
 
   //Miles
   double distance=0;
-  //1-10
+  //1-5
   double difficulty = 0;
   bool comments = true;
   bool private = true;
@@ -35,7 +35,7 @@ class HikeData {
 
 
 
-  HikeData({required this.title, required this.points, required this.times, required this.difficulty, required this.private });
+  HikeData({required this.title, required this.points, required this.difficulty, required this.private, required this.distance, required this.comments, required this.owned});
   HikeData.draft({required this.title, required this.points }){
     difficulty=0;
     private=true;

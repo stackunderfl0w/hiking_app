@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../Classes/HikeData.dart';
+import '../../../Classes/HikeData.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 //**Profile Page Hike Object Widget
