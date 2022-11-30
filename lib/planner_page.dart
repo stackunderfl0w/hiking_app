@@ -2,11 +2,13 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hiking_app/hiking.dart';
 import 'Classes/HikeData.dart';
 import 'package:latlong2/latlong.dart';
 import 'map.dart';
 
-List<HikeData> draft_hikes=[HikeData.draft(title:"Draft Hike 1", points:[LatLng(0, 0)])];
+List<HikeData> draft_hikes=[];
+
 
 class Planner extends StatefulWidget {
   const Planner({Key? key}) : super(key: key);
@@ -17,6 +19,7 @@ class Planner extends StatefulWidget {
 
 class _PlannerState extends State<Planner> {
   List<LatLng> points=[];
+  HikeData? current=null;
 
   int page=0;
   @override
@@ -31,7 +34,7 @@ class _PlannerState extends State<Planner> {
                 children: [
                   for ( var i in draft_hikes ) ...[
                     GestureDetector(
-                      onTap: () { setState(() {page=1; points=i.points;}); },
+                      onTap: () { setState(() {page=1; current=i; points=i.points;}); },
                       child: Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -62,7 +65,7 @@ class _PlannerState extends State<Planner> {
     else{
       return Scaffold(
         backgroundColor: Colors.greenAccent,
-        body: FullMap(defaultZoom: 13,lineEditor: true,editor_points: points,),
+        body: FullMap(defaultZoom: 13,lineEditor: true,points: points,),
 
         floatingActionButton: Column(
 
@@ -70,12 +73,29 @@ class _PlannerState extends State<Planner> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             FloatingActionButton(
-
-              child: const Icon(Icons.add),
+              child: const Icon(Icons.start),
               onPressed: () {
-                draft_hikes.add(HikeData.draft(title:"title${Random().nextInt(999)}",points:points));
                 setState(() {page=0;});
                 // print(points);
+                points=[];
+                globalCurrentHike=current!;
+                beginHikingCallback()
+                ;
+              },
+            ),
+            FloatingActionButton(
+              child: const Icon(Icons.add),
+              onPressed: () {
+                if(current != null){
+                  current!.points=points;
+                }
+                else{
+                  current=HikeData.draft(title:"title${Random().nextInt(999)}",points:points);
+                  draft_hikes.add(current!);
+                }
+                setState(() {page=0;});
+                // print(points);
+                current=null;
                 points=[];
               },
             ),
@@ -84,6 +104,7 @@ class _PlannerState extends State<Planner> {
               onPressed: () {
                 setState(() {page=0;});
                 // print(points);
+                current=null;
                 points=[];
               },
             ),

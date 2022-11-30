@@ -22,11 +22,13 @@ List<Polyline> polyLines = [];
 class FullMap extends StatefulWidget {
   bool lineLayer;
   bool lineEditor;
-  List<LatLng>? editor_points;
+  List<LatLng>? points;
   bool showUserLocation;
   double defaultZoom;
+  bool forceFollowUserLocation;
+  bool showElevation;
 
-  FullMap({Key? key, this.lineLayer=false, this.lineEditor=false, this.editor_points ,this.showUserLocation=false, this.defaultZoom=15}) : super(key: key);
+  FullMap({Key? key, this.lineLayer=false, this.lineEditor=false, this.points ,this.showUserLocation=false,this.forceFollowUserLocation=false,this.showElevation=false, this.defaultZoom=15}) : super(key: key);
 
   @override
   State<FullMap> createState() => _FullMapState();
@@ -44,7 +46,7 @@ class _FullMapState extends State<FullMap> {
   void initState() {
     super.initState();
     if(widget.lineEditor){
-      testPolyline=Polyline(color: Colors.deepOrange, points: widget.editor_points!);
+      testPolyline=Polyline(color: Colors.deepOrange, points: widget.points!);
       polyEditor = PolyEditor(
         addClosePathMarker: false,
         points:testPolyline.points,
@@ -55,7 +57,11 @@ class _FullMapState extends State<FullMap> {
       polyLines.add(testPolyline);
     }
 
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) {setState(() {});print(globalCurrentViewLocation);});
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      setState(() {});
+      print(globalCurrentViewLocation);
+      print(current_location.altitude);
+    });
   }
   @override
   void dispose() {
@@ -69,87 +75,106 @@ class _FullMapState extends State<FullMap> {
     bool lineLayer=widget.lineLayer;
     bool lineEditor=widget.lineEditor;
     bool showUserLocation=widget.showUserLocation;
+    bool forceFollowUserLocation=widget.forceFollowUserLocation;
+    bool showElevation=widget.showElevation;
     double defaultZoom=widget.defaultZoom;
-    List<LatLng>? editorPoints=widget.editor_points;
-    if(lineEditor&&widget.editor_points == null){
+    List<LatLng>? points=widget.points;
+    if(lineEditor&&widget.points == null){
       lineEditor=false;
       print("ERROR: LINE EDITOR REQUESTED BUT NO TARGET ARRAY PROVIDED");
+    }
+    if(lineLayer&&widget.points == null){
+      lineLayer=false;
+      print("ERROR: LINE Layer REQUESTED BUT NO TARGET ARRAY PROVIDED");
     }
     //print("create map centered at");
     //print(globalCurrentViewLocation);
     return Scaffold(
-      body: FlutterMap(
-        mapController: mapController,
-        options: MapOptions(
-          absorbPanEventsOnScrollables: false,
-          center: globalCurrentViewLocation,
-          zoom: defaultZoom,
-          maxZoom: 18,
-          minZoom: 5,
-          onTap: (_, ll) {
-            if(lineEditor){
-              polyEditor.add(testPolyline.points, ll);
-              print(testPolyline.points);
-            }
-          },
-          onPositionChanged: (MapPosition position, bool hasGesture){
-            globalCurrentViewLocation=position.center!;
-          }
-        ),
-        nonRotatedChildren: [
-          AttributionWidget.defaultWidget(
-            source: 'OpenStreetMap contributors',
-            onSourceTapped: () {},
+      body:Stack(children: [
+        FlutterMap(
+          mapController: mapController,
+          options: MapOptions(
+              absorbPanEventsOnScrollables: false,
+              center: globalCurrentViewLocation,
+              zoom: defaultZoom,
+              maxZoom: 18,
+              minZoom: 5,
+              onTap: (_, ll) {
+                if(lineEditor){
+                  polyEditor.add(testPolyline.points, ll);
+                  print(testPolyline.points);
+                }
+              },
+              onPositionChanged: (MapPosition position, bool hasGesture){
+                globalCurrentViewLocation=position.center!;
+              }
           ),
-        ],
-        children: [
-          /*TileLayer(
+          nonRotatedChildren: [
+            AttributionWidget.defaultWidget(
+              source: 'OpenStreetMap contributors',
+              onSourceTapped: () {},
+            ),
+          ],
+          children: [
+            /*TileLayer(
             urlTemplate:
             'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
             userAgentPackageName: 'dev.fleaflet.flutter_map.example',
           ),*/
-          TileLayer(
-            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-            tileProvider: FMTC.instance('mapcache').getTileProvider(),
+            TileLayer(
+              urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+              tileProvider: FMTC.instance('mapcache').getTileProvider(),
               maxZoom: 20,
               userAgentPackageName: 'dev.fleaflet.flutter_map.example',
               keepBuffer: 5,
               backgroundColor: const Color(0xFFaad3df),
-          ),
-          if (lineEditor == true) ...[
-            PolylineLayer(polylines: [testPolyline]),
-            DragMarkers(markers:  polyEditor.edit()),
-          ]
-          else if (lineLayer == true) ...[
-            PolylineLayer(
-              polylineCulling: false,
-              polylines: [
-                Polyline(
-                  points:  [LatLng(30, 40), LatLng(20, 50), LatLng(25, 45),],
-                  color: Colors.blue,
-                ),
-              ],
             ),
+            if (lineEditor == true) ...[
+              PolylineLayer(polylines: [testPolyline]),
+              DragMarkers(markers:  polyEditor.edit()),
+            ]
+            else if (lineLayer == true) ...[
+              PolylineLayer(
+                polylineCulling: false,
+                polylines: [
+                  Polyline(
+                      points: points!,
+                      color: Colors.blue,
+                      strokeWidth:5
+                  ),
+                ],
+              ),
+            ],
+            if (showUserLocation == true) ...[
+              MarkerLayer(
+                markers: [
+                  Marker(
+                    point: current_LatLng,
+                    width: 30,
+                    height: 30,
+                    builder: (context) => Container(decoration: const BoxDecoration(color: Colors.blue, shape: BoxShape.circle,),),
+                  ),
+                ],
+              ),
+            ]
           ],
-          if (showUserLocation == true) ...[
-            MarkerLayer(
-              markers: [
-                Marker(
-                  point: current_LatLng,
-                  width: 30,
-                  height: 30,
-                  builder: (context) => Container(decoration: const BoxDecoration(color: Colors.blue, shape: BoxShape.circle,),),
-                ),
-              ],
-            ),
-          ]
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
+        ),
+        !showElevation? Container():Container(
+          alignment: Alignment(1.0, -.5),
+          child:Text("ELEVATION\n${(current_location.altitude!*3.281).toStringAsFixed(0)}ft",
+            style: TextStyle(
+                color: Colors.blue,
+                backgroundColor: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 22.0),
+          ),
+        )
+      ],),
+      floatingActionButton: forceFollowUserLocation ? Container() : FloatingActionButton(
         child: const Icon(Icons.replay),
         onPressed: () {
-          //mapController.move(LatLng(current_location.latitude!,current_location.longitude!), 11);
-          mapController.moveAndRotate(current_LatLng, defaultZoom,0);
+        //mapController.move(LatLng(current_location.latitude!,current_location.longitude!), 11);
+        mapController.moveAndRotate(current_LatLng, defaultZoom,0);
         },
       ),
     );

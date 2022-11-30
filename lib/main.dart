@@ -11,6 +11,7 @@ import 'planner_page.dart';
 import 'location.dart';
 import 'Pages/ProfilePage/profile_page.dart';
 import 'Classes/UserData.dart';
+import 'hiking.dart';
 
 void main() async {
   //Initializes firebase core
@@ -68,12 +69,18 @@ class _HomePageState extends State<HomePage> {
   final pages = [
     const Map(),
     const Planner(),
-    ProfilePageWidget(),
+    const ProfilePageWidget(),
+    const Hike(),
   ];
+  void start_hiking(){
+    setState(() {
+      pageIndex=3;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-
+    beginHikingCallback=start_hiking;
     return Scaffold( //this stuff could be broken into a seperate class but it's confusing
       body: pages[pageIndex],
       bottomNavigationBar: Container(
@@ -133,6 +140,7 @@ class Map extends StatefulWidget {
 }
 
 class _MapState extends State<Map> {
+  int page=0;
 
 
   @override
