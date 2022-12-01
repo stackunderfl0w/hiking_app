@@ -23,12 +23,13 @@ class FullMap extends StatefulWidget {
   bool lineLayer;
   bool lineEditor;
   List<LatLng>? points;
+  List<LatLng>? secondary_points;
   bool showUserLocation;
   double defaultZoom;
   bool forceFollowUserLocation;
   bool showElevation;
 
-  FullMap({Key? key, this.lineLayer=false, this.lineEditor=false, this.points ,this.showUserLocation=false,this.forceFollowUserLocation=false,this.showElevation=false, this.defaultZoom=15}) : super(key: key);
+  FullMap({Key? key, this.lineLayer=false, this.lineEditor=false, this.points,this.secondary_points ,this.showUserLocation=false,this.forceFollowUserLocation=false,this.showElevation=false, this.defaultZoom=15}) : super(key: key);
 
   @override
   State<FullMap> createState() => _FullMapState();
@@ -79,6 +80,7 @@ class _FullMapState extends State<FullMap> {
     bool showElevation=widget.showElevation;
     double defaultZoom=widget.defaultZoom;
     List<LatLng>? points=widget.points;
+    List<LatLng>? secondary_points=widget.secondary_points;
     if(lineEditor&&widget.points == null){
       lineEditor=false;
       print("ERROR: LINE EDITOR REQUESTED BUT NO TARGET ARRAY PROVIDED");
@@ -140,10 +142,23 @@ class _FullMapState extends State<FullMap> {
                   Polyline(
                       points: points!,
                       color: Colors.blue,
-                      strokeWidth:5
+                      strokeWidth:5,
                   ),
                 ],
               ),
+             if (secondary_points != null) ...[
+               PolylineLayer(
+                 polylineCulling: false,
+                 polylines: [
+                   Polyline(
+                     points: secondary_points,
+                     color: Colors.green,
+                     strokeWidth:5,
+                   ),
+                 ],
+               ),
+             ]
+
             ],
             if (showUserLocation == true) ...[
               MarkerLayer(

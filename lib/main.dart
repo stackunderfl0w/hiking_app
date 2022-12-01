@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold( //this stuff could be broken into a seperate class but it's confusing
       body: pages[pageIndex],
       bottomNavigationBar: Container(
-        height: 60,
+        height: pageIndex==3?0:60,
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
           borderRadius: const BorderRadius.only(

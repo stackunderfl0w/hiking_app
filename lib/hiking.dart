@@ -26,26 +26,20 @@ class Hike extends StatefulWidget {
 class _HikeState extends State<Hike> {
   List<LatLng> hiking_path=globalCurrentHike.points;
   int hiking_index=0;
-  List<LatLng> final_points=[];
-  List<double> final_times=[];
+  List<LatLng> final_points=[current_LatLng];
+  List<double> final_times=[current_location.time!];
 
   late final Timer _timer;
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 5), (_) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() {});
-      final_points.add(current_LatLng);
-      final_times.add(current_location.time!);
-      var km_dist=Distance().distance(current_LatLng, hiking_path[hiking_index])/1000;
-      if(km_dist<.1){
-        hiking_index++;
-        if(hiking_index==hiking_path.length){
-          //end_hike
-          print("INCREASE HIKING INDEX\n\n");
-        }
+      var km_dist=Distance().distance(current_LatLng, final_points.last)/1000;
+      if(km_dist>.1){
+        final_points.add(current_LatLng);
+        final_times.add(current_location.time!);
       }
     });
-
   }
 
 
@@ -54,7 +48,7 @@ class _HikeState extends State<Hike> {
       return Container(
         color: Color.fromARGB(103, 0, 250, 67), //this controls the backround color
         child: Center( //
-          child: FullMap(showUserLocation: true,forceFollowUserLocation: true ,defaultZoom: 13,lineLayer: true,showElevation: true, points: globalCurrentHike.points,),
+          child: FullMap(showUserLocation: true,forceFollowUserLocation: true ,defaultZoom: 13,lineLayer: true,showElevation: true, points: globalCurrentHike.points,secondary_points: final_points,),
         )
     );
   }
