@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hiking_app/location.dart';
 import '../../../Classes/HikeData.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:latlong2/latlong.dart';
 
 //**Profile Page Hike Object Widget
 class PPHikeWidget extends StatelessWidget {
@@ -113,7 +115,7 @@ class PPHikeWidget extends StatelessWidget {
                   Align(
                     alignment: const Alignment(0.3, 0.6),
                     child: Text(
-                      '${hikedata.distance} mi',
+                      '${ (Distance().distance(hikedata.points.first,current_LatLng)/1000).toStringAsFixed(0)} km',
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       style: const TextStyle(
