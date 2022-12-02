@@ -28,3 +28,12 @@ class HikeData {
     times=[0];
   }
 }
+
+List<HikeData> globalUserHikesList = [
+  HikeData(title: 'Main Chip Ross Loop', points: [LatLng(44.54534, -123.27086)], difficulty: 4.0, private: true, comments: true, owned: true,times: []),
+  HikeData(title: 'Bald Hill to Cardwell Hill', points: [LatLng(44.55534, -123.27286)], difficulty: 2.5, private: true, comments: false, owned: true,times: []),
+  HikeData(title: 'Fitton Green trail', points: [LatLng(44.55334, -123.27086)], difficulty: 1.5, private: false, comments: true, owned: false,times: []),
+  HikeData(title: 'C2C Trail', points: [LatLng(44.53534, -123.27086)], difficulty: 4.0, private: false, comments: true, owned: false,times: []),
+  HikeData(title: 'McDonald Farm', points: [LatLng(44.55634, -123.27186)], difficulty: 3.5, private: false, comments: true, owned: true,times: []),
+  HikeData(title: 'Muddy Road', points: [LatLng(44.55934, -123.27386)], difficulty: 1.0, private: true, comments: false, owned: true,times: []),
+];

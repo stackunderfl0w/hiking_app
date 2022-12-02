@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:hiking_app/Classes/HikeData.dart';
 import 'package:hiking_app/Classes/Utils.dart';
 import 'package:hiking_app/Pages/LoginPage/wrapper.dart';
 import 'package:hiking_app/Services/auth.dart';
@@ -141,18 +142,34 @@ class Map extends StatefulWidget {
 
 class _MapState extends State<Map> {
   int page=0;
+  List<Marker> hikes=[];
+  @override
+  void initState() {
+    super.initState();
 
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: Color.fromARGB(103, 0, 250, 67), //this controls the backround color
-
-        child: Center( //it was blue lining if I didn't have this. Idk why but ok
-          //child: map()
-          child: FullMap(showUserLocation: true, defaultZoom: 14,),
-          //child: FullMap(lineLayer: true),
+    hikes=[];
+    for( var i in globalUserHikesList){
+      hikes.add(Marker(
+        point: i.points.first,
+        width: 50,
+        height: 50,
+        builder: (context) => ElevatedButton(onPressed:(){}, child:const Icon(Icons.hiking)),
+      ));
+      //
+    }
+    return Stack(
+      children: [
+        Container(
+          color: Color.fromARGB(103, 0, 250, 67), //this controls the backround color
+          child: Center( //it was blue lining if I didn't have this. Idk why but ok
+            child: FullMap(showUserLocation: true, defaultZoom: 14, markers: hikes),
+          )
         )
+      ],
     );
   }
 }

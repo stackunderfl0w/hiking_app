@@ -26,12 +26,12 @@ class Hike extends StatefulWidget {
 
 class _HikeState extends State<Hike> {
   int page=0;
-  List<LatLng> final_points=[current_LatLng,current_LatLng];
-  List<double> final_times=[current_location.time!/1000];
 
   late final Timer _timer;
   void initState() {
     super.initState();
+    final_points=[current_LatLng,current_LatLng];
+    final_times=[current_location.time!/1000];
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() {});
       var kmDist=const Distance().distance(current_LatLng, final_points[final_points.length-2])/1000;
@@ -131,6 +131,7 @@ class _HikeState extends State<Hike> {
               child: ElevatedButton(
                 onPressed: (){
                   print("publish",);
+                  globalUserHikesList.add(globalCurrentHike);
                   CHANGE_MAIN_VIEW_CALLBACK(1);
               },
                 child: const Text("Publish", style: TextStyle(fontSize: 25),))

@@ -1,6 +1,10 @@
 import 'package:background_location/background_location.dart';
 import 'package:latlong2/latlong.dart';
 
+List<LatLng> final_points=[];
+List<double> final_times=[];
+
+
 Location current_location=Location(longitude: 0, latitude: 0, altitude: 0, accuracy: 0, bearing: 0, speed: 0, time: 0, isMock: true);
 LatLng current_LatLng=LatLng(0, 0);
 void init_location(){

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart'; // Suitable for most situations
 import 'package:flutter_map/plugin_api.dart'; // Only import if required functionality is not exposed by default
 import 'package:flutter_map_tile_caching/flutter_map_tile_caching.dart';
+import 'package:hiking_app/hiking.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter_map_line_editor/dragmarker.dart';
 import 'package:flutter_map_line_editor/polyeditor.dart';
@@ -24,12 +25,13 @@ class FullMap extends StatefulWidget {
   bool lineEditor;
   List<LatLng>? points;
   List<LatLng>? secondary_points;
+  List<Marker>? markers;
   bool showUserLocation;
   double defaultZoom;
   bool forceFollowUserLocation;
   bool showElevation;
 
-  FullMap({Key? key, this.lineLayer=false, this.lineEditor=false, this.points,this.secondary_points ,this.showUserLocation=false,this.forceFollowUserLocation=false,this.showElevation=false, this.defaultZoom=15}) : super(key: key);
+  FullMap({Key? key, this.lineLayer=false, this.lineEditor=false, this.points,this.secondary_points ,this.showUserLocation=false,this.forceFollowUserLocation=false,this.showElevation=false, this.markers, this.defaultZoom=15}) : super(key: key);
 
   @override
   State<FullMap> createState() => _FullMapState();
@@ -70,7 +72,14 @@ class _FullMapState extends State<FullMap> {
     _timer.cancel();
   }
 
+  double current_speed(){
+    double length=0;
+    for(var i=1; i<final_points.length; i++) {
+      length+=Distance().distance(final_points[i], final_points[i-1])/1000;
+    }
 
+    return (length/((current_location.time!/1000)-final_times.first)*1000);
+  }
   @override
   Widget build(BuildContext context) {
     bool lineLayer=widget.lineLayer;
@@ -81,6 +90,8 @@ class _FullMapState extends State<FullMap> {
     double defaultZoom=widget.defaultZoom;
     List<LatLng>? points=widget.points;
     List<LatLng>? secondary_points=widget.secondary_points;
+    List<Marker>? marks=widget.markers;
+
     if(lineEditor&&widget.points == null){
       lineEditor=false;
       print("ERROR: LINE EDITOR REQUESTED BUT NO TARGET ARRAY PROVIDED");
@@ -171,12 +182,18 @@ class _FullMapState extends State<FullMap> {
                   ),
                 ],
               ),
+            ],
+            if (marks != null) ...[
+              MarkerLayer(
+                markers: marks,
+              ),
             ]
           ],
         ),
         !showElevation? Container():Container(
           alignment: Alignment(1.0, -.5),
-          child:Text("ELEVATION\n${(current_location.altitude!*3.281).toStringAsFixed(0)}ft",
+          child:Text("ELEVATION: ${(current_location.altitude!*3.281).toStringAsFixed(0)}ft"
+              "\nAverage speed: ${current_speed().toStringAsFixed(1)}m/s",
             style: TextStyle(
                 color: Colors.blue,
                 backgroundColor: Colors.white,
