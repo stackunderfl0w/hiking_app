@@ -17,7 +17,7 @@ class HikeData {
 
 
 
-  HikeData({required this.title, required this.points, required this.difficulty, required this.private, required this.comments, required this.owned}){
+  HikeData({required this.title, required this.points, required this.difficulty, required this.private, required this.comments, required this.owned, required this.times}){
     for(var i=1; i<points.length; i++) {
       length+=Distance().distance(points[i], points[i-1])/1000;
     }

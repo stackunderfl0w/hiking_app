@@ -72,15 +72,15 @@ class _HomePageState extends State<HomePage> {
     const ProfilePageWidget(),
     const Hike(),
   ];
-  void start_hiking(){
+  void CHANGE_MAIN_VIEW(int page){
     setState(() {
-      pageIndex=3;
+      pageIndex=page;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    beginHikingCallback=start_hiking;
+    CHANGE_MAIN_VIEW_CALLBACK=CHANGE_MAIN_VIEW;
     return Scaffold( //this stuff could be broken into a seperate class but it's confusing
       body: pages[pageIndex],
       bottomNavigationBar: Container(

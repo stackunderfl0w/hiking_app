@@ -79,7 +79,7 @@ class _PlannerState extends State<Planner> {
                 // print(points);
                 points=[];
                 globalCurrentHike=current!;
-                beginHikingCallback()
+                CHANGE_MAIN_VIEW_CALLBACK(3)
                 ;
               },
             ),
