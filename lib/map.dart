@@ -61,9 +61,13 @@ class _FullMapState extends State<FullMap> {
     }
 
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if(widget.forceFollowUserLocation){
+        mapController.moveAndRotate(current_LatLng, 17,0);
+      }
       setState(() {});
-      print(globalCurrentViewLocation);
-      print(current_location.altitude);
+      //print(globalCurrentViewLocation);
+      //print(current_location.altitude);
+
     });
   }
   @override

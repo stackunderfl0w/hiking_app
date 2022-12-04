@@ -146,7 +146,8 @@ class _HikeState extends State<Hike> {
 }
 
 /*class Hike_Complete_Page extends StatefulWidget {
-  const Hike_Complete_Page({Key? key}) : super(key: key);
+  const Hike_
+  Complete_Page({Key? key}) : super(key: key);
 
   @override
   _Hike_Complete_PageState createState() => _Hike_Complete_PageState();
